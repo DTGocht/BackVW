@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/24089f00-b502-4f0d-8dcb-0733f1e39e54/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/BackMongo",
+    "appService.deploySubpath": "."
+}
