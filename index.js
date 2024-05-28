@@ -10,8 +10,9 @@ app.use(cors());
 var CONNECTION_STRING= "mongodb+srv://diegogocht:BackVW@backvw.fmbadp6.mongodb.net/?retryWrites=true&w=majority&appName=BackVW";
 var DATABASE_NAME = "Equipo6VW";
 var database;
+var port = process.env.PORT || 3000;
 
-app.listen(3000, function() {
+app.listen(port, function() {
     MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
         if (error) {
             console.error('Failed to connect to MongoDB:', error);
@@ -20,6 +21,10 @@ app.listen(3000, function() {
         database = client.db(DATABASE_NAME);
         console.log("MongoDB Connected!");
     });
+});
+
+app.get('/', function(req, res) {
+    res.send('Hello World!');
 });
 
 app.get('/eventos', (request, response) => {
