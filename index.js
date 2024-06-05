@@ -46,7 +46,31 @@ app.get('/eventos', (request, response) => {
         response.send(result);
     });
 });
+app.post('/eventos', (request, response) => {
+    if (!database) {
+        response.status(500).send("Database not initialized");
+        return;
+    }
 
+    const nuevoEvento = {
+        titulo: request.body.titulo,
+        descripcion: request.body.descripcion,
+        imagen: request.body.imagen,
+        duracion_f: request.body.duracion_f,
+        duracion_i: request.body.duracion_i,
+        dia_evento: request.body.dia_evento,
+        restante: request.body.restante,
+        lugar: request.body.lugar
+    };
+
+    database.collection("Eventos").insertOne(nuevoEvento, (error, result) => {
+        if (error) {
+            response.status(500).send(error);
+            return;
+        }
+        response.status(201).send(result);
+    });
+});
 
 app.get('/noticias', (request, response) => {
     if (!database) {
@@ -63,4 +87,5 @@ app.get('/noticias', (request, response) => {
 
     });
 });
+
 
