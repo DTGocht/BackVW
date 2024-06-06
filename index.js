@@ -73,26 +73,7 @@ app.post('/eventos', (request, response) => {
     });
 });
 
-app.delete('/eventos/:id', (request, response) => {
-    if (!database) {
-        response.status(500).send("Database not initialized");
-        return;
-    }
 
-    const eventId = request.params.id;
-
-    database.collection("Eventos").deleteOne({ _id: new MongoClient.ObjectID(eventId) }, (error, result) => {
-        if (error) {
-            response.status(500).send(error);
-            return;
-        }
-        if (result.deletedCount === 0) {
-            response.status(404).send("No event found with the given ID");
-        } else {
-            response.status(204).send(); // No content to send back
-        }
-    });
-});
 
 
 
