@@ -2,7 +2,7 @@
 var express = require('express');
 var MongoClient = require('mongodb').MongoClient;
 var cors = require('cors');
-
+const { MongoClient, ObjectID } = require('mongodb');
 var app = express();
 app.use(express.json());
 app.use(cors());
@@ -46,6 +46,7 @@ app.get('/eventos', (request, response) => {
         response.send(result);
     });
 });
+
 app.post('/eventos', (request, response) => {
     if (!database) {
         response.status(500).send("Database not initialized");
@@ -71,6 +72,29 @@ app.post('/eventos', (request, response) => {
         response.status(201).send(result);
     });
 });
+
+app.delete('/eventos/:id', (request, response) => {
+    if (!database) {
+        response.status(500).send("Database not initialized");
+        return;
+    }
+
+    const eventId = request.params.id;
+
+    database.collection("Eventos").deleteOne({ _id: new MongoClient.ObjectID(eventId) }, (error, result) => {
+        if (error) {
+            response.status(500).send(error);
+            return;
+        }
+        if (result.deletedCount === 0) {
+            response.status(404).send("No event found with the given ID");
+        } else {
+            response.status(204).send(); // No content to send back
+        }
+    });
+});
+
+
 
 app.get('/noticias', (request, response) => {
     if (!database) {
