@@ -1,8 +1,6 @@
-
 var express = require('express');
-var MongoClient = require('mongodb').MongoClient;
-var cors = require('cors');
 const { MongoClient, ObjectID } = require('mongodb');
+var cors = require('cors');
 var app = express();
 app.use(express.json());
 app.use(cors());
@@ -31,7 +29,6 @@ function startServer() {
 app.get('/', function(req, res) {
     res.send('Hello World!');
 });
-
 
 app.get('/eventos', (request, response) => {
     if (!database) {
@@ -73,10 +70,6 @@ app.post('/eventos', (request, response) => {
     });
 });
 
-
-
-
-
 app.get('/noticias', (request, response) => {
     if (!database) {
         response.status(500).send("Database not initialized");
@@ -88,9 +81,6 @@ app.get('/noticias', (request, response) => {
             response.status(500).send(error);
             return;
         }
-        response.send(result)
-
+        response.send(result);
     });
 });
-
-
