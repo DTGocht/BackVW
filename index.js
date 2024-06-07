@@ -10,8 +10,33 @@ var DATABASE_NAME = "Equipo6VW";
 var database;
 var port = process.env.PORT || 3000;
 const id = new ObjectId();
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
 
+
+const swaggerOptions = {
+    swaggerDefinition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'API VideoWall',
+            version: '1.0.0',
+            description: 'Documentacio APi para la base de datos no relacional de eventos y noticias de VW.',
+            contact: {
+                name: 'Diego Thomas Gocht',
+                url: '',
+                email: 'contact@example.com'
+            }
+        },
+        servers: [{
+            url: 'https://backmongo.azurewebsites.net'
+        }]
+    },
+    apis: ['./app.js'], // path to the API docs
+};
+
+const swaggerDocs = swaggerJsdoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
     if (error) {
