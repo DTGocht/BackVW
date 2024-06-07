@@ -5,3 +5,11 @@ DELETE http://localhost:3000/eventos/666228c64aa715c97b09ad07
 ###
 #DELETE http://localhost:3000/eventos/:id
 
+###
+POST http://localhost:3000/noticias
+Content-Type: application/json
+
+{
+    "imagen": "/11.jpg",
+    "Titulo": "Noticia 1"
+}

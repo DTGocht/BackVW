@@ -116,7 +116,7 @@ app.post('/noticas', (request, response) => {
         imagen: request.body.imagen,     
     };
 
-    database.collection("Eventos").insertOne(nuevoEvento, (error, result) => {
+    database.collection("Noticias").insertOne(nuevoEvento, (error, result) => {
         if (error) {
             response.status(500).send(error);
             return;
