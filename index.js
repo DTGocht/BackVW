@@ -105,3 +105,39 @@ app.get('/noticias', (request, response) => {
 });
 
 
+app.post('/noticas', (request, response) => {
+    if (!database) {
+        response.status(500).send("Database not initialized");
+        return;
+    }
+
+    const nuevoEvento = {
+        Titulo: request.body.Titulo,
+        imagen: request.body.imagen,     
+    };
+
+    database.collection("Eventos").insertOne(nuevoEvento, (error, result) => {
+        if (error) {
+            response.status(500).send(error);
+            return;
+        }
+        response.status(201).send(result);
+    });
+});
+
+
+app.delete('/noticias/:id', (request, response) => {
+    if (!database) {
+        response.status(500).send("Database not initialized");
+        return;
+    }
+
+    const id = request.params.id;
+    database.collection("Noticias").deleteOne({ _id: new ObjectId(id) }, (error, result) => {
+        if (error) {
+            response.status(500).send(error);
+            return;
+        }
+        response.send(result);
+    });
+});
