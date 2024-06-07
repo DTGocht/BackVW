@@ -105,7 +105,7 @@ app.get('/noticias', (request, response) => {
 });
 
 
-app.post('/noticas', (request, response) => {
+app.post('/noticias', (request, response) => {
     if (!database) {
         response.status(500).send("Database not initialized");
         return;
