@@ -1,3 +1,7 @@
 ###
-GET https://backmongo.azurewebsites.net/eventos
+DELETE http://localhost:3000/eventos/666228c64aa715c97b09ad07
+
+
+###
+#DELETE http://localhost:3000/eventos/:id
 

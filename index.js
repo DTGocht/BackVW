@@ -4,11 +4,14 @@ var cors = require('cors');
 var app = express();
 app.use(express.json());
 app.use(cors());
-
+const { ObjectId } = require('mongodb');
 var CONNECTION_STRING= "mongodb+srv://diegogocht:BackVW@backvw.fmbadp6.mongodb.net/?retryWrites=true&w=majority&appName=BackVW";
 var DATABASE_NAME = "Equipo6VW";
 var database;
 var port = process.env.PORT || 3000;
+const id = new ObjectId();
+
+
 
 MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
     if (error) {
@@ -70,6 +73,22 @@ app.post('/eventos', (request, response) => {
     });
 });
 
+app.delete('/eventos/:id', (request, response) => {
+    if (!database) {
+        response.status(500).send("Database not initialized");
+        return;
+    }
+
+    const id = request.params.id;
+    database.collection("Eventos").deleteOne({ _id: new ObjectId(id) }, (error, result) => {
+        if (error) {
+            response.status(500).send(error);
+            return;
+        }
+        response.send(result);
+    });
+});
+
 app.get('/noticias', (request, response) => {
     if (!database) {
         response.status(500).send("Database not initialized");
@@ -84,3 +103,5 @@ app.get('/noticias', (request, response) => {
         response.send(result);
     });
 });
+
+
